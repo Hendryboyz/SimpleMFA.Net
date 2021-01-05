@@ -12,16 +12,20 @@ namespace SimpleMFA.Net.Core
             this.timeProvider = timeProvider;
         }
 
-        public bool Verify(string rawSecret, string passcode, int discrepancy = 1, long? currentUnixEpoch = null)
+        public string GetCode(string base32Secret, long? unixEpoch = null)
         {
-            if (currentUnixEpoch == null)
-            {
-                currentUnixEpoch = timeProvider.GetNowTimeStamps();
-            }
+            unixEpoch = ProvideUnixEpoch(unixEpoch);
+            long currentTimesteps = OneTimePasswordHelper.CaculateTimesteps((long)unixEpoch);
+            byte[] bytesSecretKey = EncodingHelper.Base32DecodeString(base32Secret);
 
-            long currentTimesteps = OneTimePasswordHelper.CaculateTimesteps((long)currentUnixEpoch);
+            return OneTimePasswordHelper.ComputeTimeBasedOneTimePassword(bytesSecretKey, currentTimesteps);
+        }
 
-            byte[] bytesSecretKey = EncodingHelper.Base32DecodeString(rawSecret);
+        public bool VerifyCode(string base32Secret, string passcode, int discrepancy = 1, long? unixEpoch = null)
+        {
+            unixEpoch = ProvideUnixEpoch(unixEpoch);
+            long currentTimesteps = OneTimePasswordHelper.CaculateTimesteps((long)unixEpoch);
+            byte[] bytesSecretKey = EncodingHelper.Base32DecodeString(base32Secret);
 
             for (int step = -discrepancy; step <= discrepancy; ++step)
             {
@@ -32,6 +36,16 @@ namespace SimpleMFA.Net.Core
                 }
             }
             return false;
+        }
+
+        private long? ProvideUnixEpoch(long? currentUnixEpoch)
+        {
+            if (currentUnixEpoch == null)
+            {
+                currentUnixEpoch = timeProvider.GetNowTimeStamps();
+            }
+            
+            return currentUnixEpoch;
         }
     }
 }

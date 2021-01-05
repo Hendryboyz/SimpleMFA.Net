@@ -2,6 +2,7 @@
 {
     public interface IOTPAuthenticator
     {
-        bool Verify(string rawSecret, string passcode, int discrepancy = 1, long? currentUnixEpoch = null);
+        string GetCode(string base32Secret, long? unixEpoch = null);
+        bool VerifyCode(string base32Secret, string passcode, int discrepancy = 1, long? unixEpoch = null);
     }
 }
