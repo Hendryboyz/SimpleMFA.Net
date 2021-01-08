@@ -5,24 +5,28 @@ using SimpleMFA.Net.Core;
 using SimpleMFA.Net.Core.Providers;
 using System;
 using System.Globalization;
+using System.Security.Cryptography;
 
 namespace SimpleMFA.Net.Tests
 {
     public class GoogleAuthenticatorTests
     {
         private ITimeProvider _timeProvider;
+        private RandomNumberGenerator _randomNumberGenerator;
+
         private IOTPAuthenticator autenticator;
 
         [SetUp]
         public void SetUp()
         {
             FakeDependencies();
-            autenticator = new GoogleAuthenticator(_timeProvider);
+            autenticator = new GoogleAuthenticator(_timeProvider, _randomNumberGenerator);
         }
 
         private void FakeDependencies()
         {
             _timeProvider = Substitute.For<ITimeProvider>();
+            _randomNumberGenerator = Substitute.For<RandomNumberGenerator>();
         }
 
         [TestCase("133161", true)]
@@ -103,16 +107,41 @@ namespace SimpleMFA.Net.Tests
             #endregion
         }
 
-        [Test]
-        public void CreateSecret_GivenNothing_WhenNormalInvocation_ThenVerifyDefaultSecretLength()
+        [TestCase(15)]
+        [TestCase(33)]
+        public void CreateSecret_GivenLength_WhenInvalidLength_ThenThrowArgumentException(int secretLength)
         {
-            #region Arrange
-            #endregion
-
             #region Action
+            Exception ex = Assert.Catch(() => autenticator.CreateSecret(secretLength));
             #endregion
 
             #region Assert
+            ex.Should().BeOfType<ArgumentException>();
+            #endregion
+        }
+
+        [TestCase(new byte[] { 0x0, 0x1, 0x2, 0x3, 0x4, 0x5, 0x6, 0x7, 0x8, 0x9, 0xA, 0xB, 0xC, 0xD, 0xE, 0xF }, "ABCDEFGHIJKLMNOP")]
+        [TestCase(new byte[] { 0xF, 0xE, 0xD, 0xC, 0xB, 0xA, 0x9, 0x8, 0x7, 0x6, 0x5, 0x4, 0x3, 0x2, 0x1, 0x0 }, "PONMLKJIHGFEDCBA")]
+        public void CreateSecret_GivenNothing_WhenNormalInvocation_ThenGiven16LengthSecret(
+            byte[] randomResult, string expected)
+        {
+            #region Arrange
+            _randomNumberGenerator.GetBytes(Arg.Do<byte[]>(x => 
+            {
+                for (int i = 0; i < 16; i++)
+                {
+                    x[i] = randomResult[i];
+                }
+            }));
+            #endregion
+
+            #region Action
+            string resultSecret = autenticator.CreateSecret();
+            #endregion
+
+            #region Assert
+            resultSecret.Length.Should().Be(16);
+            resultSecret.Should().Be(expected);
             #endregion
         }
     }

@@ -5,7 +5,7 @@ namespace SimpleMFA.Net.Core.Helpers
 {
     public static class EncodingHelper
     {
-        private const string BASE32_CHARACTERS = @"ABCDEFGH" //  7
+        public const string BASE32_CHARACTERS = @"ABCDEFGH" //  7
                                                 + "IJKLMNOP" // 15
                                                 + "QRSTUVWX" // 23
                                                 + "YZ234567" // 31

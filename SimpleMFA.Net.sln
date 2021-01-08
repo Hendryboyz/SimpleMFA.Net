@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 15.0.26124.0
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleMFA.Net.Core", "SimpleMFA.Net.Core\SimpleMFA.Net.Core.csproj", "{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleMFA.Net.Tests", "SimpleMFA.Net.Tests\SimpleMFA.Net.Tests.csproj", "{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SimpleMFA.Net.Tests", "SimpleMFA.Net.Tests\SimpleMFA.Net.Tests.csproj", "{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +15,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
+		UnitTest|Any CPU = UnitTest|Any CPU
+		UnitTest|x64 = UnitTest|x64
+		UnitTest|x86 = UnitTest|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -29,6 +32,12 @@ Global
 		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.Release|x64.Build.0 = Release|Any CPU
 		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.Release|x86.ActiveCfg = Release|Any CPU
 		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.Release|x86.Build.0 = Release|Any CPU
+		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.UnitTest|Any CPU.ActiveCfg = UnitTest|Any CPU
+		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.UnitTest|Any CPU.Build.0 = UnitTest|Any CPU
+		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.UnitTest|x64.ActiveCfg = UnitTest|Any CPU
+		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.UnitTest|x64.Build.0 = UnitTest|Any CPU
+		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.UnitTest|x86.ActiveCfg = UnitTest|Any CPU
+		{E9689D34-4FCE-4530-BAB1-083F3EB1ECF0}.UnitTest|x86.Build.0 = UnitTest|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Debug|x64.ActiveCfg = Debug|Any CPU
@@ -36,11 +45,16 @@ Global
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Debug|x86.Build.0 = Debug|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Release|x64.ActiveCfg = Release|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Release|x64.Build.0 = Release|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Release|x86.ActiveCfg = Release|Any CPU
 		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.Release|x86.Build.0 = Release|Any CPU
+		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.UnitTest|Any CPU.ActiveCfg = UnitTest|Any CPU
+		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.UnitTest|Any CPU.Build.0 = UnitTest|Any CPU
+		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.UnitTest|x64.ActiveCfg = UnitTest|Any CPU
+		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.UnitTest|x64.Build.0 = UnitTest|Any CPU
+		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.UnitTest|x86.ActiveCfg = UnitTest|Any CPU
+		{3443AE95-E03A-4DA6-88AC-4ECF02D3917B}.UnitTest|x86.Build.0 = UnitTest|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

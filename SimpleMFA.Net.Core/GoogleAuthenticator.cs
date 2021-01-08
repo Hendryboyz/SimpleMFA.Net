@@ -1,15 +1,50 @@
 ﻿using SimpleMFA.Net.Core.Helpers;
 using SimpleMFA.Net.Core.Providers;
+using System;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace SimpleMFA.Net.Core
 {
     public class GoogleAuthenticator : IOTPAuthenticator
     {
-        private ITimeProvider timeProvider;
+        private readonly ITimeProvider timeProvider;
+        private readonly RandomNumberGenerator randomNumberGenerator;
 
-        public GoogleAuthenticator(ITimeProvider timeProvider)
+
+        public GoogleAuthenticator(ITimeProvider timeProvider, RandomNumberGenerator randomNumberGenerator = null)
         {
             this.timeProvider = timeProvider;
+            if (randomNumberGenerator is null)
+            {
+                randomNumberGenerator = new RNGCryptoServiceProvider();
+            }
+            this.randomNumberGenerator = randomNumberGenerator;
+        }
+
+        public string CreateSecret(int length = 16)
+        {
+            if (length < 16 || 32 < length)
+            {
+                throw new ArgumentException();
+            }
+
+            byte[] byteIndex = GetRandomIndex(length);
+
+            StringBuilder secretResult = new StringBuilder();
+            for (int i = 0; i < length; i++)
+            {
+                int charIndex = byteIndex[i] & 31;
+                secretResult.Append(EncodingHelper.BASE32_CHARACTERS[charIndex]);
+            }
+            return secretResult.ToString();
+        }
+
+        private byte[] GetRandomIndex(int length)
+        {
+            byte[] byteIndex = new byte[length];
+            randomNumberGenerator.GetBytes(byteIndex);
+            return byteIndex;
         }
 
         public string GetCode(string base32Secret, long? unixEpoch = null)
