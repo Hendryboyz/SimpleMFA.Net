@@ -11,9 +11,16 @@ namespace SimpleMFA.Net.Core
         private readonly ITimeProvider timeProvider;
         private readonly RandomNumberGenerator randomNumberGenerator;
 
+        public GoogleAuthenticator() : this(null, null) { }
 
-        public GoogleAuthenticator(ITimeProvider timeProvider, RandomNumberGenerator randomNumberGenerator = null)
+        public GoogleAuthenticator(ITimeProvider timeProvider) : this(timeProvider, null) { }
+
+        public GoogleAuthenticator(ITimeProvider timeProvider, RandomNumberGenerator randomNumberGenerator)
         {
+            if (timeProvider is null)
+            {
+                timeProvider = new DefaultTimeProvider();
+            }
             this.timeProvider = timeProvider;
             if (randomNumberGenerator is null)
             {
