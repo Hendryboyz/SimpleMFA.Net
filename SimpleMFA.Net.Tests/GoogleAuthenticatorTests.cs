@@ -2,6 +2,7 @@
 using NSubstitute;
 using NUnit.Framework;
 using SimpleMFA.Net.Core;
+using SimpleMFA.Net.Core.Helpers;
 using SimpleMFA.Net.Core.Providers;
 using System;
 using System.Globalization;
@@ -142,6 +143,7 @@ namespace SimpleMFA.Net.Tests
             #region Assert
             resultSecret.Length.Should().Be(16);
             resultSecret.Should().Be(expected);
+            Console.WriteLine(SharedSecretHelper.GenerateQRCodeURL(resultSecret, "henry_chou", "trendmicro.com"));
             #endregion
         }
     }
